@@ -1,7 +1,7 @@
 # ytmpv - A dmenu based shell script for loading URL's with mpv
 --------
 ## Default Requirements
-- `[yt-dlp](https://github.com/yt-dlp/yt-dlp)`
+- `yt-dlp` (https://github.com/yt-dlp/yt-dlp)
 - `dmenu` (It is recommenced that you change the dmenu source code to remap pasting to C-V)
 - `mpv`
 - `notify-send` (change to `true` if you want notifications to be disabled)
