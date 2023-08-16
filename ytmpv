@@ -1,13 +1,43 @@
 #!/bin/sh
 
-YT_DL="$(which yt-dlp)"
+# TODO
+# ACTIONS:
+#	* XAUD - Download Audio
+#	|-	Prompt for name
+#	* DOWN - Download Whole Video
+# LOGFILE
+
+YT_DL="yt-dlp"
+YT_DL_FALGS=""
+VIDP="mpv"
+VIPD_FLAGS=""
+NTF="notify-send"
+
+fail () {
+	$NTF "ytmpv" "$1"; exit 
+}
+
 SELITEM="$(dmenu -p "Video URL:" < /dev/null)"
 [ -z "$SELITEM" ] && exit
+SELURL="${SELITEM#*::}"
+[ -z "$SELURL" ] && exit
 
 case "$SELITEM" in
+	XAUD::*)
+		$NTF "ytmpv" "Extracting Audio for: $SELURL"
+		$YT_DL -x --audio-format vorbis "$SELURL" || fail "Failed to Download"
+		$NTF "ytmpv" "Download Completed Successfully"
+		;;
+
+	DOWN::*)
+		$NTF "ytmpv" "Downloading $SELURL"
+		$YT_DL "$SELURL" || fail "Failed to Download"
+		$NTF "ytmpv" "Download Completed Successfully"
+		;;
+
 	*)
-		notify-send "Playing $SELITEM"
-		mpv "$SELITEM" || notify-send "MPV ERROR" "Video Failed to play" -u critical
+		$NTF "ytmpv" "Playing $SELITEM"
+		$VIDP "$SELITEM" || $NTF "Failure to play URL" "Log file in $LOGF"
 		;;
 esac
 
