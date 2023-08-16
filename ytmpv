@@ -1,0 +1,13 @@
+#!/bin/sh
+
+YT_DL="$(which yt-dlp)"
+SELITEM="$(dmenu -p "Video URL:" < /dev/null)"
+[ -z "$SELITEM" ] && exit
+
+case "$SELITEM" in
+	*)
+		notify-send "Playing $SELITEM"
+		mpv "$SELITEM" || notify-send "MPV ERROR" "Video Failed to play" -u critical
+		;;
+esac
+
