@@ -1,21 +1,8 @@
 #!/bin/sh
 
-# TODO
-# ACTIONS:
-#	* XAUD - Download Audio
-#	|-	Prompt for name
-#	* DOWN - Download Whole Video
-# LOGFILE
-
-YT_DL="yt-dlp"
-YT_DL_FALGS=""
+YT_DL="yt-dlp --add-metadata"
 VIDP="mpv"
-VIPD_FLAGS=""
-NTF="notify-send"
-
-fail () {
-	$NTF "ytmpv" "$1"; exit 
-}
+NTF="notify-send ytmpv"
 
 SELITEM="$(dmenu -p "Video URL:" < /dev/null)"
 [ -z "$SELITEM" ] && exit
@@ -24,20 +11,21 @@ SELURL="${SELITEM#*::}"
 
 case "$SELITEM" in
 	XAUD::*)
-		$NTF "ytmpv" "Extracting Audio for: $SELURL"
-		$YT_DL -x --audio-format vorbis "$SELURL" || fail "Failed to Download"
-		$NTF "ytmpv" "Download Completed Successfully"
+		$YT_DL -x --audio-format vorbis -P "$HOME/Music" \
+			-o "$(dmenu -p "Filename:" < /dev/null)" "$SELURL"\
+			|| $NTF "Failure To Download"
+		$NTF "Extracting Audio for: $SELURL"
+		$NTF "Download Completed"
 		;;
 
 	DOWN::*)
-		$NTF "ytmpv" "Downloading $SELURL"
-		$YT_DL "$SELURL" || fail "Failed to Download"
-		$NTF "ytmpv" "Download Completed Successfully"
+		$NTF "Downloading $SELURL"
+		$YT_DL "$SELURL" || $NTF "Failed to Download"
+		$NTF "Download Completed"
 		;;
 
 	*)
-		$NTF "ytmpv" "Playing $SELITEM"
-		$VIDP "$SELITEM" || $NTF "Failure to play URL" "Log file in $LOGF"
+		$NTF "Playing $SELITEM"
+		$VIDP "$SELITEM" || $NTF "Failure to play URL"
 		;;
 esac
-
