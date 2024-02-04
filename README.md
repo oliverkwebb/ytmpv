@@ -5,7 +5,7 @@
 
 ## Requirements
 - `yt-dlp` (https://github.com/yt-dlp/yt-dlp)
-- `dmenu`
+- `dmenu` (ytfzf support will NOT work with the case insensitve patch, as it uses -i)
 - `mpv`
 - `ytfzf` (for Search Result Scraping)
 - `notify-send`
