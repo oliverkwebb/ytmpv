@@ -1,5 +1,7 @@
 # ytmpv - A dmenu based shell script for loading URL's with mpv
 --------
+![Showcase](./showcase.gif)
+
 ## Default Requirements
 - `yt-dlp` (https://github.com/yt-dlp/yt-dlp)
 - `dmenu`
