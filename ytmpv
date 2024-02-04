@@ -3,29 +3,21 @@
 YT_DL="yt-dlp --add-metadata"
 VIDP="mpv"
 NTF="notify-send ytmpv"
+MDIR="$HOME/Music"
 
 SELITEM="$(dmenu -p "Video URL:" < /dev/null)"
-[ -z "$SELITEM" ] && exit
+
+[ "${SELITEM%%::*}" = "SADA" ] && SELITEM="XAUD::$(ytfzf -Il -D "${SELITEM#*::}" | head -n1)"
+
 SELURL="${SELITEM#*::}"
-[ -z "$SELURL" ] && exit
 
-case "$SELITEM" in
+case "${SELITEM:?}" in
 	XAUD::*)
-		$YT_DL -x --audio-format vorbis -P "$HOME/Music" \
-			-o "$(dmenu -p "Filename:" < /dev/null)" "$SELURL"\
-			|| $NTF "Failure To Download"
-		$NTF "Extracting Audio for: $SELURL"
-		$NTF "Download Completed"
+		$YT_DL "${SELURL:?}" -x --audio-format vorbis -P "$(find "$MDIR" -type d | dmenu -l 10 -p "Directory:" -z $MDIR)"\
+			-o "$(dmenu -p "Filename:" -z Song < /dev/null)"\
+      && $NTF "Download Completed" || $NTF "Failure To Download"
 		;;
+	DOWN::*) $YT_DL "${SELURL:?}" && $NTF "Download Completed" || $NTF "Failed to Download" ;; 
 
-	DOWN::*)
-		$NTF "Downloading $SELURL"
-		$YT_DL "$SELURL" || $NTF "Failed to Download"
-		$NTF "Download Completed"
-		;;
-
-	*)
-		$NTF "Playing $SELITEM"
-		$VIDP "$SELITEM" || $NTF "Failure to play URL"
-		;;
+	*) $VIDP "$SELITEM" || $NTF "Failure to play URL" ;;
 esac

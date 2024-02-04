@@ -4,6 +4,7 @@
 - `yt-dlp` (https://github.com/yt-dlp/yt-dlp)
 - `dmenu`
 - `mpv`
+- `ytfzf` (for "SADA")
 - `notify-send` (change to `true` if you want notifications to be disabled)
 
 ## Actions
@@ -17,6 +18,7 @@ The default action when no other action is specified is to play the URL given in
 to extract only audio in Vorbis format, It will propmt for a name using `dmenu`
 and only start downloading after the name is given, Downloads default to the "$HOME/Music"
 Directory.
+- `SADA` Runs `ytfzf` on prompt, Preforms the XAUD action on the URL of the selected video
 
 ## Configuration
 Configuration can be done by changing the variables at the start of the code
