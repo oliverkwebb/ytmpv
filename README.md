@@ -3,9 +3,15 @@
 
 ![Showcase](./showcase.gif)
 
+## Why does ytmpv exist?
+This project was created in reaction to Youtube and it's parent company Google
+declaring war on adblock, removing my access to YouTube. Since I refuse to give YouTube
+or Google money via Ad Revenue, I created this script to provide a quick access to proxies,
+mainly yt-dlp. 
+
 ## Requirements
 - `yt-dlp` (https://github.com/yt-dlp/yt-dlp)
-- `dmenu` (ytfzf support will NOT work with the case insensitve patch, as it uses -i)
+- `dmenu` (ytfzf support will NOT work with the case insensitive patch, as it uses -i)
 - `mpv`
 - `ytfzf` (for Search Result Scraping)
 - `notify-send`
