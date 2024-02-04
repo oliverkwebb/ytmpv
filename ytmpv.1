@@ -1,0 +1,111 @@
+.TH ytmpv 1 2024-02-03 Linux
+.SH NAME
+ytmpv \- Download and play videos with
+.BR dmenu (1)
+and
+.BR yt-dlp (1)
+.SH SYNOPSIS
+.SY ytmpv
+.OP \-q
+.OP \-p PLAYER
+.OP \-d DIRECTORY
+.OP \-g DOWNLOADER
+.OP \-a ACTION
+.YS
+
+[\fIACTION\fR::]PROMPT
+.SH DESCRIPTION
+.B ytmpv
+is a POSIX shell script that provides a interface through
+.BR dmenu (1)
+to download videos with
+.BR yt-dlp (1)
+or play them using
+.BR mpv (1).
+Actions can be specified at the start of the prompt and are separated from the
+URL with "::". These actions will handle the URL in different ways.
+.SH OPTIONS
+.TP
+.B \-q
+Do not notify using
+.BR notify-send (1)
+when the video is done playing or downloading.
+.TP
+.BI \-p " PLAYER"
+Set the video player from
+.BR mpv (1)
+to PLAYER.
+.TP
+.BI \-d " DIRECTORY"
+Set the music directory from "$HOME/Music" to DIRECTORY.
+.TP
+.BI \-a " ACTION"
+Set the action from PLAY to ACTION.
+.SH ACTIONS
+.TP
+.B PLAY
+Play video with 
+.BR mpv (1)
+or the player specified with the \-p option
+the URL is passed directly to mpv as the first argument.
+.TP
+.B DOWN
+Download the video using
+.BR yt-dlp (1)
+the video is not converted or saved to any specific directory.
+.TP
+.B XAUD
+The user is prompted to select from the subdirectories of the specified Music
+directory. Then prompted for a filename. The video's is downloaded and saved
+to the specified filename and directory.
+.PP
+.B ytmpv
+can also work in conjunction with
+.BR ytfzf (1)
+To scrape youtube search results and allow the user to select through
+top search results. In this case, the prompt, normally treated as a URL is
+treated as a search term. The 2 actions that allow this are SADA, which
+downloads audio from videos (Like XAUD). And SAP, which plays videos (PLAY)
+.TP
+.B SADA
+Get a video URL from the provided search term with
+.BR ytfzf (1),
+then preform the XAUD action on it (Download Audio to Music Directory).
+.TP
+.B SAP
+Get a video URL from the provided search term with
+.BR ytfzf (1),
+then preform the PLAY action on it (Play with 
+.BR mpv (1)).
+.SH EXAMPLES
+.TP
+.EX
+.BR ytmpv " -q -p curl"
+PROMPT: "https://www.foo.bar/1234"
+
+.EE
+Will download the video at "https://www.foo.bar/1234" with
+.BR curl (1)
+Will not notify the user if it fails.
+.TP
+.EX
+.BR ytmpv " -a SAP"
+PROMPT: "Linux"
+
+.EE
+Will show a menu of the top youtube search results for "Linux",
+then play whatever one the user selects with
+.BR mpv (1)
+.SH AUTHOR
+Written by Oliver Webb
+.MT aquahobbyist@protom.me
+.ME
+
+Project page at
+.UR https://www.github.com/oliverkwebb/ytmpv
+.UE
+.SH SEE ALSO
+.BR yt-dlp (1)
+.BR mpv (1)
+.BR ytfzf (1)
+.BR dmenu (1)

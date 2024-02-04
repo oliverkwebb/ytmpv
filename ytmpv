@@ -5,19 +5,39 @@ VIDP="mpv"
 NTF="notify-send ytmpv"
 MDIR="$HOME/Music"
 
-SELITEM="$(dmenu -p "Video URL:" < /dev/null)"
+while getopts qp:d:g:a:m: flag; do
+  case "$flag" in
+    q) NTF="true"      ;;
+    p) VIDP="$OPTARG"  ;;
+    d) MDIR="$OPTARG"  ;;
+    g) YT_DL="$OPTARG" ;;
+    a) ACTION="$OPTARG";;
+    *) printf "ytmpv [-q] [-p PLAYER] [-d DIRECTORY] [-g DOWNLOADER] [-a ACTION]"; exit 1 ;;
+  esac
+done
 
-[ "${SELITEM%%::*}" = "SADA" ] && SELITEM="XAUD::$(ytfzf -Il -D "${SELITEM#*::}" | head -n1)"
+SELITEM="$(dmenu -p "Video URL:" < /dev/null)"
+if test -z "$ACTION"; then
+[ "${SELITEM#*::}" = "$SELITEM" ] && PROMPTACTION="PLAY" || PROMPTACTION=${SELITEM%%::*}
+ACTION="${PROMPTACTION:-$ACTION}"
+fi
+
+[ "$ACTION" = "SADA" ] && SELITEM="$(ytfzf -Il -D "${SELITEM#*::}" | head -n1)" ACTION=XAUD
+[ "$ACTION" = "SAP"  ] && SELITEM="$(ytfzf -Il -D "${SELITEM#*::}" | head -n1)" ACTION=PLAY
 
 SELURL="${SELITEM#*::}"
 
-case "${SELITEM:?}" in
-	XAUD::*)
-		$YT_DL "${SELURL:?}" -x --audio-format vorbis -P "$(find "$MDIR" -type d | dmenu -l 10 -p "Directory:" -z $MDIR)"\
-			-o "$(dmenu -p "Filename:" -z Song < /dev/null)"\
+case "${ACTION:?Need Action}" in
+	XAUD)
+    SAVEDIR="$(find "$MDIR" -type d | dmenu -l 10 -p "Directory:")"
+    FILENAME="$(dmenu -p "Filename:" < /dev/null)"
+		$YT_DL "${SELURL:?}" -x --audio-format vorbis -P "${SAVEDIR:-$MDIR}"\
+      -o "${FILENAME:-Song}"\
       && $NTF "Download Completed" || $NTF "Failure To Download"
 		;;
-	DOWN::*) $YT_DL "${SELURL:?}" && $NTF "Download Completed" || $NTF "Failed to Download" ;; 
+	DOWN) $YT_DL "${SELURL:?}" && $NTF "Download Completed" || $NTF "Failed to Download" ;; 
 
-	*) $VIDP "$SELITEM" || $NTF "Failure to play URL" ;;
+	PLAY) $VIDP "${SELURL:?}" || $NTF "Failure to play URL" ;;
+
+  *) printf "Unknown Action: %s" "$ACTION"; exit 1 ;;
 esac
