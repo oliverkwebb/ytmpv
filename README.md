@@ -46,9 +46,12 @@ Directory.
 - `SADA` Runs `ytfzf` on prompt, Preforms the XAUD subcommand on the URL of the selected video
 - `SAP` Runs `ytfzf` on prompt, Preforms the PLAY subcommand on the URL of the selected video
 
-## Configuration
-Configuration can be done by changing the variables at the start of the code
-For example, the video player is set in the `VIDP` variable at the start of the code
+## Configuration and flags
+-q can be used to silence notifications
+-s or -a can be used to specify a subcommand before processing the prompt, so you don't have to specify it in the prompt
+-p Can be used to change the default player from mpv
+-g Can be used to change the default downloader (Ex. curl)
+-d Can be used to change the Music Directory from ~/Music
 
 Refer to the source code and the docuentation for specified applications for
 further configuration
