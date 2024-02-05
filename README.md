@@ -18,9 +18,9 @@ mainly yt-dlp.
 
 ## How to get audio from youtube videos using ytmpv
 - Run `ytmpv -a SADA`, `ytmpv -a XAUD`, or `ytmpv`
-- If you haven't already specified the action as `XAUD` or `SADA` specify either action by typing "XAUD::" or "SADA::"
+- If you haven't already specified the subcommand as `XAUD` or `SADA` wiht the -a flag specify either subcommand by typing "XAUD::" or "SADA::"
 before your URL or search term.
-- If your specified action is `XAUD` provide the URL to the video you wish to download. If it is "SADA", provide a search term.
+- If your specified subcommand is `XAUD` provide the URL to the video you wish to download. If it is "SADA", provide a search term.
 - If you have specified a search term, you will be prompted with the search results for that term, Select one.
 - You will be asked for a subdirectory of `~/Music` to save the file in, if you do not chose one, it will be placed in `~/Music/`
 - You will be asked for a filename, ".ogg" will automatically be appended to the end of the filename. If you do not choose a filename, it will be saved to "Song".
@@ -29,22 +29,22 @@ format.
 
 ## How to browse and play Youtube videos with ymtpv
 - Run `ytmpv -a SAP`, or `ytmpv`
-- If you haven't already specified the action as `SAP` specify it by typing "SAP::" before your search term.
+- If you haven't already specified the subcommand as `SAP` specify it by typing "SAP::" before your search term.
 - If you have specified a search term, you will be prompted with the search results for that term, Select one.
 - The video will be played with mpv; You will be notified (unless -q is given) if the video has failed to play
 
-## Actions
-Special actions can be specified by putting `FOOBAR::` at the start of the URL.
+## Subcommands
+Special subcommands can be specified by putting `FOOBAR::` at the start of the URL.
 For example `DOWN::https://www.foo.bar` will download the video located at `https://www.foo.bar`
-The default action when no other action is specified is to play the URL given in `mpv`.
+The default subcommand when no other one is specified "PLAY", which will play the URL given in `mpv`.
 
 - `DOWN` Downloads video with `yt-dlp` instead of playing it
 - `XAUD` E**x**tract **Aud**io, Downloads video with `yt-dlp` with flags passed to yt-dlp
 to extract only audio in Vorbis format, It will prompt for a name using `dmenu`
 and only start downloading after the name is given, Downloads default to the "$HOME/Music"
 Directory.
-- `SADA` Runs `ytfzf` on prompt, Preforms the XAUD action on the URL of the selected video
-- `SAP` Runs `ytfzf` on prompt, Preforms the PLAY action on the URL of the selected video
+- `SADA` Runs `ytfzf` on prompt, Preforms the XAUD subcommand on the URL of the selected video
+- `SAP` Runs `ytfzf` on prompt, Preforms the PLAY subcommand on the URL of the selected video
 
 ## Configuration
 Configuration can be done by changing the variables at the start of the code

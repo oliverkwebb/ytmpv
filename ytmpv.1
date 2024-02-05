@@ -10,10 +10,11 @@ and
 .OP \-p PLAYER
 .OP \-d DIRECTORY
 .OP \-g DOWNLOADER
-.OP \-a ACTION
+.OP "\-a" SUBCOMMAND
+.OP "\-s" SUBCOMMAND
 .YS
 
-[\fIACTION\fR::]PROMPT
+[\fISUBCOMMAND\fR::]PROMPT
 .SH DESCRIPTION
 .B ytmpv
 is a POSIX shell script that provides a interface through
@@ -22,8 +23,8 @@ to download videos with
 .BR yt-dlp (1)
 or play them using
 .BR mpv (1).
-Actions can be specified at the start of the prompt and are separated from the
-URL with "::". These actions will handle the URL in different ways.
+Subcommands can be specified at the start of the prompt and are separated from the
+URL with "::". These subcommands will handle the URL in different ways.
 .SH OPTIONS
 .TP
 .B \-q
@@ -39,9 +40,9 @@ to PLAYER.
 .BI \-d " DIRECTORY"
 Set the music directory from "$HOME/Music" to DIRECTORY.
 .TP
-.BI \-a " ACTION"
-Set the action from PLAY to ACTION.
-.SH ACTIONS
+.BI "\-a, \-s" " SUBCOMMAND"
+Set the subcommand from PLAY to SUBCOMMAND.
+.SH SUBCOMMANDS
 .TP
 .B PLAY
 Play video with 
@@ -64,18 +65,18 @@ can also work in conjunction with
 .BR ytfzf (1)
 To scrape youtube search results and allow the user to select through
 top search results. In this case, the prompt, normally treated as a URL is
-treated as a search term. The 2 actions that allow this are SADA, which
+treated as a search term. The 2 subcommands that allow this are SADA, which
 downloads audio from videos (Like XAUD). And SAP, which plays videos (PLAY)
 .TP
 .B SADA
 Get a video URL from the provided search term with
 .BR ytfzf (1),
-then preform the XAUD action on it (Download Audio to Music Directory).
+then preform the XAUD subcommand on it (Download Audio to Music Directory).
 .TP
 .B SAP
 Get a video URL from the provided search term with
 .BR ytfzf (1),
-then preform the PLAY action on it (Play with 
+then preform the PLAY subcommand on it (Play with 
 .BR mpv (1)).
 .SH EXAMPLES
 .TP

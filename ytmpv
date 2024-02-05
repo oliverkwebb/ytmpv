@@ -5,14 +5,14 @@ VIDP="mpv"
 NTF="notify-send ytmpv"
 MDIR="$HOME/Music"
 
-while getopts qp:d:g:a:m: flag; do
+while getopts qp:d:g:a:m:s: flag; do
   case "$flag" in
     q) NTF="true"      ;;
     p) VIDP="$OPTARG"  ;;
     d) MDIR="$OPTARG"  ;;
     g) YT_DL="$OPTARG" ;;
-    a) ACTION="$OPTARG";;
-    *) printf "ytmpv [-q] [-p PLAYER] [-d DIRECTORY] [-g DOWNLOADER] [-a ACTION]"; exit 1 ;;
+    a|s) ACTION="$OPTARG";;
+    *) echo "ytmpv [-q] [-p PLAYER] [-d DIRECTORY] [-g DOWNLOADER] [(-a | -s) SUBCOMMAND]"; exit 1 ;;
   esac
 done
 
@@ -27,7 +27,7 @@ fi
 
 SELURL="${SELITEM#*::}"
 
-case "${ACTION:?Need Action}" in
+case "${ACTION:?}" in
 	XAUD)
     SAVEDIR="$(find "$MDIR" -type d | dmenu -l 10 -p "Directory:")"
     FILENAME="$(dmenu -p "Filename:" < /dev/null)"
