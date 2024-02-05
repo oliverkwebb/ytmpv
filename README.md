@@ -48,9 +48,13 @@ Directory.
 
 ## Configuration and flags
 -q can be used to silence notifications
+
 -s or -a can be used to specify a subcommand before processing the prompt, so you don't have to specify it in the prompt
+
 -p Can be used to change the default player from mpv
+
 -g Can be used to change the default downloader (Ex. curl)
+
 -d Can be used to change the Music Directory from ~/Music
 
 Refer to the source code and the docuentation for specified applications for
